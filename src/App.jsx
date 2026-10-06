@@ -539,7 +539,7 @@ function App() {
           </div>
 
           <div>
-            <h2>NutriFlow</h2>
+            <h1>HealthyMe</h1>
             <span>Daily wellness</span>
           </div>
 
