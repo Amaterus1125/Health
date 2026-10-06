@@ -539,7 +539,7 @@ function App() {
           </div>
 
           <div>
-            <h1>HealthyMe</h1>
+            <h2>HealthyMe</h2>
             <span>Daily wellness</span>
           </div>
 
