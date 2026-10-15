@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useMemo } from "react";
 import "./index.css";
 
-const API_ENDPOINT = "http://localhost:8000/api/generate-plan";
-const PDF_ENDPOINT = "http://localhost:8000/api/download-pdf";
+const API_ENDPOINT = "https://health-pqsg.onrender.com/api/generate-plan";
+const PDF_ENDPOINT = "https://health-pqsg.onrender.com/api/download-pdf";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
