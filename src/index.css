@@ -66,9 +66,9 @@ button {
   background:
     linear-gradient(
       90deg,
-      rgba(7, 18, 12, 0.9),
-      rgba(7, 18, 12, 0.72) 45%,
-      rgba(7, 18, 12, 0.78)
+      rgba(7, 18, 12, 0.94),
+      rgba(7, 18, 12, 0.86) 45%,
+      rgba(7, 18, 12, 0.90)
     );
 
   z-index: 1;
@@ -82,22 +82,22 @@ button {
   background:
     linear-gradient(
       90deg,
-      rgba(239, 249, 242, 0.9),
-      rgba(239, 249, 242, 0.72) 45%,
-      rgba(239, 249, 242, 0.82)
+      rgba(239, 249, 242, 0.94),
+      rgba(239, 249, 242, 0.86) 45%,
+      rgba(239, 249, 242, 0.90)
     );
 }
 
 /* =========================================================
-   GLASS
+   GLASS (Reduced Transparency for Superior Legibility)
 ========================================================= */
 
 .glass {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.13),
-      rgba(255, 255, 255, 0.035)
+      rgba(15, 28, 20, 0.88),
+      rgba(10, 20, 14, 0.92)
     );
 
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -106,7 +106,7 @@ button {
   -webkit-backdrop-filter: blur(22px);
 
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.22),
+    0 20px 60px rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
@@ -114,15 +114,15 @@ button {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.62),
-      rgba(255, 255, 255, 0.28)
+      rgba(255, 255, 255, 0.92),
+      rgba(240, 248, 242, 0.95)
     );
 
-  border-color: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.75);
 
   box-shadow:
-    0 20px 50px rgba(37, 74, 49, 0.13),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 20px 50px rgba(37, 74, 49, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* =========================================================
@@ -199,7 +199,7 @@ button {
 
   font-size: 12px;
 
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 /* =========================================================
@@ -217,7 +217,7 @@ button {
 
   letter-spacing: 1.6px;
 
-  opacity: 0.48;
+  opacity: 0.6;
 
   padding: 0 10px 8px;
 }
@@ -264,7 +264,7 @@ button {
 }
 
 .nav-button:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 
   transform: translateX(2px);
 }
@@ -273,12 +273,12 @@ button {
   background:
     linear-gradient(
       135deg,
-      rgba(101, 229, 154, 0.2),
-      rgba(101, 229, 154, 0.06)
+      rgba(101, 229, 154, 0.25),
+      rgba(101, 229, 154, 0.08)
     );
 
   border-color:
-    rgba(101, 229, 154, 0.18);
+    rgba(101, 229, 154, 0.25);
 
   color: #74eea2;
 }
@@ -299,9 +299,9 @@ button {
 
   border-radius: 15px;
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
 
   color: inherit;
 
@@ -313,10 +313,10 @@ button {
 }
 
 .account-button:hover {
-  background: rgba(101, 229, 154, 0.08);
+  background: rgba(101, 229, 154, 0.12);
 
   border-color:
-    rgba(101, 229, 154, 0.22);
+    rgba(101, 229, 154, 0.3);
 }
 
 .avatar {
@@ -364,7 +364,7 @@ button {
 .account-info span {
   font-size: 10px;
 
-  opacity: 0.48;
+  opacity: 0.6;
 
   margin-top: 2px;
 }
@@ -372,7 +372,7 @@ button {
 .arrow {
   font-size: 9px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* =========================================================
@@ -415,7 +415,7 @@ button {
 
   letter-spacing: 1px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 
   padding: 4px 6px 10px;
 }
@@ -433,7 +433,7 @@ button {
 .user-row:hover,
 .selected-user {
   background:
-    rgba(101, 229, 154, 0.08);
+    rgba(101, 229, 154, 0.12);
 }
 
 .user-select {
@@ -494,7 +494,7 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 
   margin-top: 2px;
 }
@@ -523,10 +523,10 @@ button {
   border-radius: 11px;
 
   border: 1px dashed
-    rgba(101, 229, 154, 0.35);
+    rgba(101, 229, 154, 0.45);
 
   background:
-    rgba(101, 229, 154, 0.06);
+    rgba(101, 229, 154, 0.08);
 
   color: #65e59a;
 
@@ -540,7 +540,7 @@ button {
 
 .create-account-button:hover {
   background:
-    rgba(101, 229, 154, 0.13);
+    rgba(101, 229, 154, 0.18);
 }
 
 /* =========================================================
@@ -561,10 +561,10 @@ button {
   border-radius: 13px;
 
   border: 1px solid
-    rgba(255, 255, 255, 0.12);
+    rgba(255, 255, 255, 0.15);
 
   background:
-    rgba(255, 255, 255, 0.055);
+    rgba(255, 255, 255, 0.07);
 
   color: inherit;
 
@@ -578,10 +578,10 @@ button {
 
 .theme-button:hover {
   background:
-    rgba(101, 229, 154, 0.1);
+    rgba(101, 229, 154, 0.14);
 
   border-color:
-    rgba(101, 229, 154, 0.3);
+    rgba(101, 229, 154, 0.35);
 }
 
 /* =========================================================
@@ -598,10 +598,10 @@ button {
   border-radius: 15px;
 
   background:
-    rgba(255, 255, 255, 0.045);
+    rgba(255, 255, 255, 0.06);
 
   border:
-    1px solid rgba(255, 255, 255, 0.07);
+    1px solid rgba(255, 255, 255, 0.09);
 }
 
 .tip > span {
@@ -617,7 +617,7 @@ button {
 
   line-height: 1.45;
 
-  opacity: 0.48;
+  opacity: 0.6;
 
   margin-top: 4px;
 }
@@ -673,7 +673,7 @@ button {
 
   font-weight: 800;
 
-  opacity: 0.55;
+  opacity: 0.65;
 
   margin-bottom: 6px;
 }
@@ -693,7 +693,7 @@ button {
 .page-header p {
   font-size: 13px;
 
-  opacity: 0.58;
+  opacity: 0.7;
 }
 
 .profile-mini {
@@ -708,7 +708,7 @@ button {
   border-radius: 15px;
 
   background:
-    rgba(255, 255, 255, 0.05);
+    rgba(255, 255, 255, 0.07);
 }
 
 .profile-mini span {
@@ -716,7 +716,7 @@ button {
 
   font-size: 10px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 
   margin-top: 2px;
 }
@@ -750,7 +750,7 @@ button {
   transform: translateY(-3px);
 
   border-color:
-    rgba(101, 229, 154, 0.25);
+    rgba(101, 229, 154, 0.3);
 }
 
 .info-card span {
@@ -760,7 +760,7 @@ button {
 
   letter-spacing: 1.2px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 
   margin-bottom: 7px;
 }
@@ -780,7 +780,7 @@ button {
 .info-card small {
   font-size: 10px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 
   margin-left: 4px;
 }
@@ -825,7 +825,7 @@ button {
 
   letter-spacing: 1.3px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .card-heading h2 {
@@ -865,7 +865,7 @@ button {
   background:
     conic-gradient(
       #65e59a var(--progress),
-      rgba(255, 255, 255, 0.08) 0
+      rgba(255, 255, 255, 0.1) 0
     );
 
   position: relative;
@@ -882,14 +882,14 @@ button {
   border-radius: 50%;
 
   background:
-    rgba(13, 31, 21, 0.88);
+    rgba(10, 22, 15, 0.95);
 
   backdrop-filter: blur(10px);
 }
 
 .light .progress-circle::before {
   background:
-    rgba(240, 249, 243, 0.9);
+    rgba(245, 250, 245, 0.95);
 }
 
 .circle-inner {
@@ -913,7 +913,7 @@ button {
 .circle-inner span {
   font-size: 10px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .remaining {
@@ -921,7 +921,7 @@ button {
 
   font-size: 12px;
 
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .remaining strong {
@@ -959,7 +959,7 @@ button {
 }
 
 .macro-top span {
-  opacity: 0.65;
+  opacity: 0.75;
 }
 
 .macro-top strong {
@@ -976,7 +976,7 @@ button {
   overflow: hidden;
 
   background:
-    rgba(255, 255, 255, 0.09);
+    rgba(255, 255, 255, 0.12);
 }
 
 .macro-fill {
@@ -1019,16 +1019,16 @@ button {
   height: 42px;
 
   border: 1px solid
-    rgba(255, 255, 255, 0.1);
+    rgba(255, 255, 255, 0.15);
 
   border-radius: 11px;
 
   background:
-    rgba(255, 255, 255, 0.05);
+    rgba(255, 255, 255, 0.07);
 
   filter: grayscale(1);
 
-  opacity: 0.35;
+  opacity: 0.45;
 
   cursor: pointer;
 
@@ -1041,10 +1041,10 @@ button {
   opacity: 1;
 
   background:
-    rgba(73, 170, 255, 0.12);
+    rgba(73, 170, 255, 0.2);
 
   border-color:
-    rgba(73, 170, 255, 0.25);
+    rgba(73, 170, 255, 0.35);
 }
 
 .water-glass:hover {
@@ -1081,7 +1081,7 @@ button {
 
   box-shadow:
     0 12px 30px
-    rgba(101, 229, 154, 0.2);
+    rgba(101, 229, 154, 0.25);
 }
 
 /* =========================================================
@@ -1103,7 +1103,7 @@ button {
 
   letter-spacing: 1.5px;
 
-  opacity: 0.48;
+  opacity: 0.6;
 }
 
 .section-heading h2 {
@@ -1124,10 +1124,10 @@ button {
 
 .outline-button {
   border:
-    1px solid rgba(101, 229, 154, 0.3);
+    1px solid rgba(101, 229, 154, 0.4);
 
   background:
-    rgba(101, 229, 154, 0.07);
+    rgba(101, 229, 154, 0.1);
 
   color: #65e59a;
 
@@ -1146,7 +1146,7 @@ button {
 
 .outline-button:hover {
   background:
-    rgba(101, 229, 154, 0.14);
+    rgba(101, 229, 154, 0.2);
 }
 
 /* =========================================================
@@ -1190,7 +1190,7 @@ button {
   border-radius: 14px;
 
   background:
-    rgba(101, 229, 154, 0.09);
+    rgba(101, 229, 154, 0.12);
 
   font-size: 22px;
 
@@ -1214,7 +1214,7 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 
   margin-bottom: 4px;
 }
@@ -1238,7 +1238,7 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 /* =========================================================
@@ -1282,7 +1282,7 @@ button {
   border-radius: 12px;
 
   background:
-    rgba(101, 229, 154, 0.08);
+    rgba(101, 229, 154, 0.12);
 
   font-size: 19px;
 
@@ -1300,7 +1300,7 @@ button {
 
   line-height: 1.5;
 
-  opacity: 0.52;
+  opacity: 0.65;
 }
 
 /* =========================================================
@@ -1381,7 +1381,7 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 
   margin-top: 2px;
 }
@@ -1393,10 +1393,10 @@ button {
   border-radius: 10px;
 
   border: 1px solid
-    rgba(255, 100, 100, 0.15);
+    rgba(255, 100, 100, 0.25);
 
   background:
-    rgba(255, 100, 100, 0.07);
+    rgba(255, 100, 100, 0.1);
 
   cursor: pointer;
 
@@ -1405,7 +1405,7 @@ button {
 
 .delete-meal:hover {
   background:
-    rgba(255, 100, 100, 0.16);
+    rgba(255, 100, 100, 0.22);
 }
 
 /* =========================================================
@@ -1452,7 +1452,7 @@ button {
 
 .day-button:hover {
   background:
-    rgba(255, 255, 255, 0.06);
+    rgba(255, 255, 255, 0.08);
 }
 
 .day-button.active {
@@ -1482,7 +1482,7 @@ button {
   padding-bottom: 20px;
 
   border-bottom:
-    1px solid rgba(255, 255, 255, 0.08);
+    1px solid rgba(255, 255, 255, 0.1);
 }
 
 .weekly-plan-header span {
@@ -1490,7 +1490,7 @@ button {
 
   letter-spacing: 1.5px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 .weekly-plan-header h2 {
@@ -1532,10 +1532,10 @@ button {
   border-radius: 15px;
 
   background:
-    rgba(255, 255, 255, 0.045);
+    rgba(255, 255, 255, 0.07);
 
   border:
-    1px solid rgba(255, 255, 255, 0.06);
+    1px solid rgba(255, 255, 255, 0.09);
 
   transition: 0.25s;
 }
@@ -1544,7 +1544,7 @@ button {
   transform: translateX(3px);
 
   background:
-    rgba(101, 229, 154, 0.07);
+    rgba(101, 229, 154, 0.1);
 }
 
 .meal-number {
@@ -1557,7 +1557,7 @@ button {
   border-radius: 10px;
 
   background:
-    rgba(101, 229, 154, 0.1);
+    rgba(101, 229, 154, 0.15);
 
   color: #65e59a;
 
@@ -1569,7 +1569,7 @@ button {
 .weekly-meal span {
   font-size: 9px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 .weekly-meal h3 {
@@ -1583,7 +1583,7 @@ button {
 
   font-size: 18px !important;
 
-  opacity: 0.35 !important;
+  opacity: 0.45 !important;
 }
 
 /* =========================================================
@@ -1614,7 +1614,7 @@ button {
 
   letter-spacing: 1.4px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 
   margin-bottom: 7px;
 }
@@ -1630,7 +1630,7 @@ button {
 .progress-stat small {
   font-size: 10px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 .chart-card {
@@ -1684,7 +1684,7 @@ button {
 .bar-value {
   font-size: 9px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .bar-area {
@@ -1699,7 +1699,7 @@ button {
   border-radius: 10px;
 
   background:
-    rgba(255, 255, 255, 0.035);
+    rgba(255, 255, 255, 0.06);
 
   overflow: hidden;
 }
@@ -1730,7 +1730,7 @@ button {
 .bar-day {
   font-size: 10px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .progress-details {
@@ -1753,7 +1753,7 @@ button {
 
   letter-spacing: 1.2px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 .detail-card h2 {
@@ -1768,7 +1768,7 @@ button {
   height: 7px;
 
   background:
-    rgba(255, 255, 255, 0.08);
+    rgba(255, 255, 255, 0.12);
 
   border-radius: 20px;
 
@@ -1793,7 +1793,7 @@ button {
 .detail-card small {
   font-size: 9px;
 
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 /* =========================================================
@@ -1816,11 +1816,11 @@ button {
   padding: 25px;
 
   background:
-    rgba(0, 0, 0, 0.68);
+    rgba(0, 0, 0, 0.78);
 
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
 
-  -webkit-backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .create-form {
@@ -1885,7 +1885,7 @@ button {
 .form-header p {
   font-size: 11px;
 
-  opacity: 0.5;
+  opacity: 0.65;
 
   line-height: 1.5;
 }
@@ -1901,7 +1901,7 @@ button {
   border: none;
 
   background:
-    rgba(255, 255, 255, 0.08);
+    rgba(255, 255, 255, 0.12);
 
   color: inherit;
 
@@ -1916,7 +1916,7 @@ button {
   transform: rotate(90deg);
 
   background:
-    rgba(255, 255, 255, 0.15);
+    rgba(255, 255, 255, 0.2);
 }
 
 /* =========================================================
@@ -1940,7 +1940,7 @@ button {
 
   font-weight: 700;
 
-  opacity: 0.65;
+  opacity: 0.8;
 }
 
 .form-group input,
@@ -1952,10 +1952,10 @@ button {
   border-radius: 12px;
 
   border:
-    1px solid rgba(255, 255, 255, 0.12);
+    1px solid rgba(255, 255, 255, 0.18);
 
   background:
-    rgba(255, 255, 255, 0.06);
+    rgba(255, 255, 255, 0.09);
 
   color: inherit;
 
@@ -1969,24 +1969,24 @@ button {
 .form-group input::placeholder {
   color: currentColor;
 
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   border-color:
-    rgba(101, 229, 154, 0.65);
+    rgba(101, 229, 154, 0.75);
 
   box-shadow:
     0 0 0 3px
-    rgba(101, 229, 154, 0.08);
+    rgba(101, 229, 154, 0.12);
 
   background:
-    rgba(101, 229, 154, 0.06);
+    rgba(101, 229, 154, 0.08);
 }
 
 .form-group select option {
-  background: #17221b;
+  background: #111b15;
 
   color: white;
 }
@@ -2024,7 +2024,7 @@ button {
   margin-top: 5px;
 
   border-top:
-    1px solid rgba(255, 255, 255, 0.08);
+    1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cancel-button {
@@ -2033,7 +2033,7 @@ button {
   border-radius: 11px;
 
   border:
-    1px solid rgba(255, 255, 255, 0.12);
+    1px solid rgba(255, 255, 255, 0.18);
 
   background: transparent;
 
@@ -2157,7 +2157,7 @@ button {
     inset: 0;
 
     background:
-      rgba(0, 0, 0, 0.5);
+      rgba(0, 0, 0, 0.6);
 
     z-index: 15;
   }
@@ -2230,7 +2230,7 @@ button {
     padding-top: 10px;
 
     border-top:
-      1px solid rgba(255, 255, 255, 0.07);
+      1px solid rgba(255, 255, 255, 0.1);
   }
 
   .form-row {
@@ -2311,7 +2311,7 @@ button {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.6px;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .nutrition-section-heading h2 {
@@ -2324,9 +2324,9 @@ button {
   padding: 7px 13px;
   border-radius: 50px;
 
-  background: rgba(101, 229, 154, 0.1);
+  background: rgba(101, 229, 154, 0.15);
 
-  border: 1px solid rgba(101, 229, 154, 0.25);
+  border: 1px solid rgba(101, 229, 154, 0.35);
 
   color: #65e59a;
 
@@ -2372,10 +2372,10 @@ button {
   transform: translateY(-6px);
 
   border-color:
-    rgba(101, 229, 154, 0.35);
+    rgba(101, 229, 154, 0.45);
 
   box-shadow:
-    0 22px 45px rgba(0, 0, 0, 0.25);
+    0 22px 45px rgba(0, 0, 0, 0.35);
 }
 
 
@@ -2405,10 +2405,10 @@ button {
   font-size: 22px;
 
   background:
-    rgba(255, 255, 255, 0.08);
+    rgba(255, 255, 255, 0.12);
 
   border:
-    1px solid rgba(255, 255, 255, 0.08);
+    1px solid rgba(255, 255, 255, 0.12);
 
   backdrop-filter: blur(10px);
 }
@@ -2420,7 +2420,7 @@ button {
 
   letter-spacing: 0.7px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 
   margin-bottom: 3px;
 }
@@ -2438,20 +2438,20 @@ button {
 
   margin-left: 3px;
 
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 
 /* =========================================================
-   MACRO COLORS
+   MACRO COLORS (Enhanced Opacity for Better Readability)
 ========================================================= */
 
 .macro-protein {
   background:
     linear-gradient(
       135deg,
-      rgba(126, 150, 255, 0.2),
-      rgba(126, 150, 255, 0.06)
+      rgba(126, 150, 255, 0.32),
+      rgba(126, 150, 255, 0.12)
     );
 }
 
@@ -2459,8 +2459,8 @@ button {
   background:
     linear-gradient(
       135deg,
-      rgba(242, 180, 68, 0.2),
-      rgba(242, 180, 68, 0.06)
+      rgba(242, 180, 68, 0.32),
+      rgba(242, 180, 68, 0.12)
     );
 }
 
@@ -2468,8 +2468,8 @@ button {
   background:
     linear-gradient(
       135deg,
-      rgba(239, 113, 154, 0.2),
-      rgba(239, 113, 154, 0.06)
+      rgba(239, 113, 154, 0.32),
+      rgba(239, 113, 154, 0.12)
     );
 }
 
@@ -2477,8 +2477,8 @@ button {
   background:
     linear-gradient(
       135deg,
-      rgba(88, 213, 154, 0.2),
-      rgba(88, 213, 154, 0.06)
+      rgba(88, 213, 154, 0.32),
+      rgba(88, 213, 154, 0.12)
     );
 }
 
@@ -2502,7 +2502,7 @@ button {
 }
 
 .macro-target-row span {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .macro-target-row strong {
@@ -2528,7 +2528,7 @@ button {
   overflow: hidden;
 
   background:
-    rgba(255, 255, 255, 0.08);
+    rgba(255, 255, 255, 0.12);
 }
 
 .macro-progress-fill {
@@ -2586,7 +2586,7 @@ button {
 
   font-size: 10px;
 
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 .nutrition-good {
@@ -2640,7 +2640,7 @@ button {
   transform: translateY(-5px);
 
   border-color:
-    rgba(101, 229, 154, 0.32);
+    rgba(101, 229, 154, 0.4);
 }
 
 
@@ -2668,7 +2668,7 @@ button {
   border-radius: 13px;
 
   background:
-    rgba(255, 255, 255, 0.07);
+    rgba(255, 255, 255, 0.1);
 
   font-size: 19px;
 }
@@ -2700,21 +2700,21 @@ button {
   color: #65e59a;
 
   background:
-    rgba(101, 229, 154, 0.1);
+    rgba(101, 229, 154, 0.15);
 }
 
 .micro-excellent {
   color: #78dfff;
 
   background:
-    rgba(120, 223, 255, 0.1);
+    rgba(120, 223, 255, 0.15);
 }
 
 .micro-low {
   color: #ff9a9a;
 
   background:
-    rgba(255, 100, 100, 0.1);
+    rgba(255, 100, 100, 0.15);
 }
 
 
@@ -2741,7 +2741,7 @@ button {
 .micro-main-value span {
   font-size: 10px;
 
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 
@@ -2764,13 +2764,13 @@ button {
 }
 
 .micro-target-row span {
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 .micro-target-row strong {
   font-size: 9px;
 
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 
@@ -2790,7 +2790,7 @@ button {
   overflow: hidden;
 
   background:
-    rgba(255, 255, 255, 0.08);
+    rgba(255, 255, 255, 0.12);
 }
 
 .micro-progress-fill {
@@ -2847,7 +2847,7 @@ button {
 }
 
 .micro-bottom-row span {
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 .micro-bottom-row strong {
@@ -2861,22 +2861,22 @@ button {
 
 .light .nutrition-count {
   background:
-    rgba(50, 180, 110, 0.08);
+    rgba(50, 180, 110, 0.12);
 
   border-color:
-    rgba(50, 180, 110, 0.2);
+    rgba(50, 180, 110, 0.28);
 }
 
 .light .macro-progress-track,
 .light .micro-progress-track {
   background:
-    rgba(20, 50, 30, 0.08);
+    rgba(20, 50, 30, 0.12);
 }
 
 .light .macro-progress-icon,
 .light .micro-progress-icon {
   background:
-    rgba(255, 255, 255, 0.4);
+    rgba(255, 255, 255, 0.65);
 }
 
 
@@ -2957,13 +2957,13 @@ button {
 
 /* Scrollbar Track (Background) */
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
 }
 
 /* Scrollbar Thumb (Draggable Bar) */
 ::-webkit-scrollbar-thumb {
-  background: rgba(101, 229, 154, 0.4);
+  background: rgba(101, 229, 154, 0.5);
   border-radius: 10px;
   transition: background 0.25s ease;
 }
@@ -2981,5 +2981,5 @@ button {
 /* Firefox support */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(101, 229, 154, 0.4) rgba(0, 0, 0, 0.2);
+  scrollbar-color: rgba(101, 229, 154, 0.5) rgba(0, 0, 0, 0.3);
 }
