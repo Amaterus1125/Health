@@ -1150,7 +1150,7 @@ button {
 }
 
 /* =========================================================
-   MEALS
+   MEALS (Solid Dark Backgrounds for Crystal-Clear Legibility)
 ========================================================= */
 
 .meals-list {
@@ -1173,6 +1173,9 @@ button {
 
   border-radius: 18px;
 
+  background: rgba(12, 26, 17, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+
   transition: 0.25s;
 }
 
@@ -1190,7 +1193,7 @@ button {
   border-radius: 14px;
 
   background:
-    rgba(101, 229, 154, 0.12);
+    rgba(101, 229, 154, 0.15);
 
   font-size: 22px;
 
@@ -1206,6 +1209,10 @@ button {
 
 .meal-main {
   flex: 1;
+
+  background: rgba(8, 18, 12, 0.88) !important;
+  padding: 8px 10px;
+  border-radius: 10px;
 }
 
 .meal-main > span,
@@ -1214,13 +1221,15 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.55;
+  opacity: 0.7;
 
   margin-bottom: 4px;
 }
 
 .meal-main h3 {
   font-size: 13px;
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
 
 .meal-nutrition {
@@ -1231,6 +1240,7 @@ button {
   font-family: "Manrope", sans-serif;
 
   font-size: 16px;
+  color: #ffffff !important;
 }
 
 .meal-nutrition span {
@@ -1238,7 +1248,7 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.55;
+  opacity: 0.7;
 }
 
 /* =========================================================
@@ -1335,6 +1345,9 @@ button {
 
   border-radius: 20px;
 
+  background: rgba(12, 26, 17, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+
   transition: 0.25s;
 }
 
@@ -1356,6 +1369,7 @@ button {
   font-family: "Manrope", sans-serif;
 
   font-size: 17px;
+  color: #ffffff !important;
 }
 
 .meal-values {
@@ -1374,6 +1388,7 @@ button {
   display: block;
 
   font-size: 13px;
+  color: #ffffff !important;
 }
 
 .meal-values span {
@@ -1381,7 +1396,7 @@ button {
 
   font-size: 9px;
 
-  opacity: 0.55;
+  opacity: 0.7;
 
   margin-top: 2px;
 }
@@ -1532,10 +1547,10 @@ button {
   border-radius: 15px;
 
   background:
-    rgba(255, 255, 255, 0.07);
+    rgba(12, 26, 17, 0.92) !important;
 
   border:
-    1px solid rgba(255, 255, 255, 0.09);
+    1px solid rgba(255, 255, 255, 0.14) !important;
 
   transition: 0.25s;
 }
@@ -1569,12 +1584,12 @@ button {
 .weekly-meal span {
   font-size: 9px;
 
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 .weekly-meal h3 {
   font-size: 13px;
-
+  color: #ffffff !important;
   margin-top: 4px;
 }
 
