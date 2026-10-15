@@ -1,0 +1,70 @@
+{
+  "inputs": {
+    "age": 30,
+    "sex": "male",
+    "height_cm": 175,
+    "weight_kg": 75,
+    "activity_factor": 1.55,
+    "goal": "lose",
+    "water_level": "moderate"
+  },
+  "energy": {
+    "bmr": 1699,
+    "tdee": 2633,
+    "target_calories": 2233
+  },
+  "fat": {
+    "min_g": 50,
+    "target_g": 74,
+    "saturated_g": 25,
+    "unsaturated_g": 50
+  },
+  "fiber_g": 31,
+  "protein": {
+    "minimum": { "g": 60,  "kcal": 240 },
+    "optimum": { "g": 120, "kcal": 480 },
+    "maximum": { "g": 165, "kcal": 660 }
+  },
+  "carbs_g": {
+    "minimum": 331,
+    "optimum": 271,
+    "maximum": 226
+  },
+  "water_ml": {
+    "normal": 2625,
+    "moderate": 3375,
+    "extreme": 4125
+  },
+  "micronutrients": {
+    "vitamin_a_ug": 900,
+    "vitamin_c_mg": 90,
+    "vitamin_d_ug": 15,
+    "vitamin_e_mg": 15,
+    "vitamin_k_ug": 120,
+    "b1_mg": 1.2,
+    "b2_mg": 1.3,
+    "b3_mg": 16,
+    "b6_mg": 1.3,
+    "b12_ug": 2.4,
+    "folate_ug": 400,
+    "calcium_mg": 1000,
+    "iron_mg": 8,
+    "magnesium_mg": 400,
+    "zinc_mg": 11,
+    "potassium_mg": 3400,
+    "selenium_ug": 55,
+    "iodine_ug": 150,
+    "sodium_limit_mg": 2300
+  },
+  "omega3": {
+    "ala_g": 1.6,
+    "epa_mg": 250,
+    "dha_mg": 250
+  },
+  "preferences": {
+    "diet": "vegetarian",
+    "allergies": [],
+    "dislikes": [],
+    "jain": false
+  }
+}

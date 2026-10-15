@@ -2945,3 +2945,41 @@ button {
   }
 
 }
+
+
+/* Custom Scrollbars to Match Theme */
+
+/* Width & Height for scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Scrollbar Track (Background) */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Scrollbar Thumb (Draggable Bar) */
+::-webkit-scrollbar-thumb {
+  background: rgba(101, 229, 154, 0.4);
+  border-radius: 10px;
+  transition: background 0.25s ease;
+}
+
+/* Scrollbar Thumb Hover State */
+::-webkit-scrollbar-thumb:hover {
+  background: #65e59a;
+}
+
+/* Hide scrollbar buttons (the white top/bottom arrows) */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(101, 229, 154, 0.4) rgba(0, 0, 0, 0.2);
+}
