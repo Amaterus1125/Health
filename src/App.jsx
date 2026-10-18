@@ -5,7 +5,7 @@ import {
 import "./index.css";
 
 const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const BACKEND_URL = isLocal ? "http://localhost:8000" : "https://health-web-goal.onrender.com";
+const BACKEND_URL = isLocal ? "http://localhost:8000" : "https://health-pqsg.onrender.com";
 
 const API_ENDPOINT = `${BACKEND_URL}/api/generate-plan`;
 const PDF_ENDPOINT = `${BACKEND_URL}/api/download-pdf`;
