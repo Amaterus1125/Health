@@ -11,7 +11,7 @@ from run import sheet_to_engine
 from engine import recommend, check
 from meals import recommend_meals
 
-# For PDF Generation
+# just some imports for the pdf making , work flawlessly emo
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -158,7 +158,7 @@ def generate_plan(survey: UserSurveyRequest):
         if result.get("status") != "ok":
             result = recommend(sheet, include_supplements=survey.include_supplements)
         
-        # Save date-wise entry to user history
+        # just saving date wise enteries bc people might want them hehe 
         history = load_history()
         username = survey.name.strip().lower()
         if username not in history:
@@ -171,7 +171,7 @@ def generate_plan(survey: UserSurveyRequest):
             "target_kcal": raw_sheet["energy"]["target_calories"],
             "meals": result.get("meals", {})
         }
-        # Keep recent unique logs or prepend
+        # keeping the recent people logged in logged in , a real common trick , using  FAST API btw 
         history[username].insert(0, log_entry)
         save_history(history)
 
