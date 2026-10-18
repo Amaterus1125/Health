@@ -4,9 +4,12 @@ import {
 } from "recharts";
 import "./index.css";
 
-const API_ENDPOINT = "http://localhost:8000/api/generate-plan";
-const PDF_ENDPOINT = "http://localhost:8000/api/download-pdf";
-const HISTORY_ENDPOINT = "http://localhost:8000/api/history";
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const BACKEND_URL = isLocal ? "http://localhost:8000" : "https://health-web-goal.onrender.com";
+
+const API_ENDPOINT = `${BACKEND_URL}/api/generate-plan`;
+const PDF_ENDPOINT = `${BACKEND_URL}/api/download-pdf`;
+const HISTORY_ENDPOINT = `${BACKEND_URL}/api/history`;
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
