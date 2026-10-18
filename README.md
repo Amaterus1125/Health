@@ -338,3 +338,7 @@ NutriFlow provides general nutrition information and is not a substitute for pro
 ## Author
 
 Maintained by Harshit (GitHub: [Amaterus1125](https://github.com/Amaterus1125)).
+
+## LICENSE 
+
+Apache 2.0 LICENSE (see the LICENSE page for more information).
