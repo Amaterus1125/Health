@@ -20,7 +20,7 @@ export default function App() {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedChartModal, setSelectedChartModal] = useState(null);
 
-  // Assessment Form State with Separate Name & Optional Username/ID
+
   const [formData, setFormData] = useState({
     name: "Harshit",
     username: "",
@@ -36,7 +36,7 @@ export default function App() {
     include_supplements: false
   });
 
-  // Remember last username from localStorage on mount
+  
   useEffect(() => {
     const savedUser = localStorage.getItem("nutriflow_username");
     if (savedUser) {
@@ -65,7 +65,7 @@ export default function App() {
     }));
   }, []);
 
-  // When username changes and login is enabled, try fetching past history instantly
+
   const handleUsernameBlur = async () => {
     if (formData.enable_login && formData.username.trim()) {
       localStorage.setItem("nutriflow_username", formData.username.trim());
@@ -150,7 +150,6 @@ export default function App() {
   const sheet = useMemo(() => planData?.sheet, [planData]);
   const plan = useMemo(() => planData?.plan, [planData]);
 
-  // Macro Data
   const macroData = useMemo(() => {
     if (!sheet) return [];
     const pGrams = sheet.protein?.[formData.protein_level]?.g || 118;
@@ -163,7 +162,7 @@ export default function App() {
     ];
   }, [sheet, formData.protein_level]);
 
-  // Micronutrient Adequacy Data
+
   const microData = useMemo(() => [
     { nutrient: 'Iron (mg)', achieved: 100, target: 100 },
     { nutrient: 'Calcium (%)', achieved: 95, target: 100 },
@@ -441,7 +440,6 @@ export default function App() {
           ))}
         </section>
 
-        {/* ---------------- ANALYTICS & BENCHMARKS SECTION ---------------- */}
         <section className="section-heading" style={{ marginTop: "50px" }}>
           <div>
             <span>SYSTEM ANALYTICS & MACHINE LEARNING</span>
@@ -450,10 +448,8 @@ export default function App() {
           <small style={{ opacity: 0.6, fontSize: "11px" }}>Click any chart card to view deep-dive explanations</small>
         </section>
 
-        {/* ROW 1: Machine Learning Engine Performance */}
         <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginTop: "15px" }}>
           
-          {/* Chart Card 1: Execution Time */}
           <div 
             className="chart-card glass" 
             onClick={() => setSelectedChartModal("speed")}
@@ -482,7 +478,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Chart Card 2: Model Selection Accuracy */}
           <div 
             className="chart-card glass" 
             onClick={() => setSelectedChartModal("accuracy")}
@@ -493,7 +488,7 @@ export default function App() {
                 <span style={{ fontSize: "10px", letterSpacing: "1.2px", opacity: 0.5 }}>ACCURACY METRIC</span>
                 <h3 style={{ fontSize: "18px", fontFamily: "Manrope, sans-serif", margin: "4px 0 0 0" }}>Selection Quality (AUROC & Recall)</h3>
               </div>
-              <span className="chart-target" style={{ fontSize: "11px", color: "#65e59a", fontWeight: "700" }}>Higher is Better 🔍</span>
+              <span className="chart-target" style={{ fontSize: "11px", color: "#65e59a", fontWeight: "700" }}>Higher is Better </span>
             </div>
             <div style={{ width: "100%", height: 240, marginTop: 10 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -514,10 +509,8 @@ export default function App() {
 
         </section>
 
-        {/* ROW 2: Nutrition Science & Database Analytics */}
         <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginTop: "20px" }}>
           
-          {/* Chart Card 3: Macro Caloric Split */}
           <div 
             className="chart-card glass" 
             onClick={() => setSelectedChartModal("macros")}
@@ -528,7 +521,7 @@ export default function App() {
                 <span style={{ fontSize: "10px", letterSpacing: "1.2px", opacity: 0.5 }}>ENERGY DISTRIBUTION</span>
                 <h3 style={{ fontSize: "18px", fontFamily: "Manrope, sans-serif", margin: "4px 0 0 0" }}>Macronutrient Caloric Split</h3>
               </div>
-              <span className="chart-target" style={{ fontSize: "11px", color: "#65e59a", fontWeight: "700" }}>View Details 🔍</span>
+              <span className="chart-target" style={{ fontSize: "11px", color: "#65e59a", fontWeight: "700" }}>View Details </span>
             </div>
             <div style={{ width: "100%", height: 240, marginTop: 10, display: "flex", justifyContent: "center", alignItems: "center" }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -555,7 +548,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Chart Card 4: Micronutrient Adequacy */}
           <div 
             className="chart-card glass" 
             onClick={() => setSelectedChartModal("micros")}
@@ -566,7 +558,7 @@ export default function App() {
                 <span style={{ fontSize: "10px", letterSpacing: "1.2px", opacity: 0.5 }}>COMPLIANCE METRIC</span>
                 <h3 style={{ fontSize: "18px", fontFamily: "Manrope, sans-serif", margin: "4px 0 0 0" }}>Micronutrient Adequacy (%)</h3>
               </div>
-              <span className="chart-target" style={{ fontSize: "11px", color: "#65e59a", fontWeight: "700" }}>View Details 🔍</span>
+              <span className="chart-target" style={{ fontSize: "11px", color: "#65e59a", fontWeight: "700" }}>View Details </span>
             </div>
             <div style={{ width: "100%", height: 240, marginTop: 10 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -582,7 +574,6 @@ export default function App() {
 
         </section>
 
-        {/* ---------------- DATE-WISE USER ACTIVITY HISTORY LOG ---------------- */}
         {formData.enable_login && (
           <>
             <section className="section-heading" style={{ marginTop: "50px" }}>
@@ -614,7 +605,6 @@ export default function App() {
         )}
       </main>
 
-      {/* FULL-VIEW MEAL MODAL */}
       {selectedMeal && (
         <div className="modal-overlay" onClick={() => setSelectedMeal(null)}>
           <div className="create-form glass" onClick={(e) => e.stopPropagation()} style={{ width: "700px", maxWidth: "90vw", padding: "30px", borderRadius: "24px" }}>
