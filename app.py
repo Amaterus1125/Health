@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional, List
 import os
+import json
+from datetime import datetime
 
 from run import sheet_to_engine
 from engine import recommend, check
@@ -25,15 +27,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+HISTORY_FILE = "user_history.json"
+
+def load_history():
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, "r") as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_history(history):
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(history, f, indent=2)
+
 class UserSurveyRequest(BaseModel):
     name: str
     age: int
-    sex: str                  # "Male" or "Female"
-    height: float             # cm
-    weight: float             # kg
-    activity: float           # 1.2, 1.375, 1.55, 1.725, 1.9
-    goal: str                 # "Lose", "Maintain", "Gain"
-    diet: str                 # "Vegetarian", "Non-Vegetarian", "Vegan", "Eggetarian"
+    sex: str                  
+    height: float             
+    weight: float             
+    activity: float           
+    goal: str                 
+    diet: str                 
     water_level: Optional[str] = "moderate"
     allergies: Optional[List[str]] = []
     dislikes: Optional[List[str]] = []
@@ -45,33 +62,24 @@ def calculate_sheet_from_survey(survey: UserSurveyRequest) -> dict:
     sex_lower = survey.sex.lower()
     is_male = (sex_lower == "male")
     
-    # BMR (Mifflin-St Jeor)
     s_val = 5 if is_male else -161
     bmr = 10 * survey.weight + 6.25 * survey.height - 5 * survey.age + s_val
-    
-    # TDEE
     tdee = bmr * survey.activity
     
-    # Target Calories by Goal
     goal_map = {"lose": -400, "maintain": 0, "gain": 400}
     adjustment = goal_map.get(survey.goal.lower(), 0)
     target = tdee + adjustment
-    
-    # Safety floor
     min_floor = 1500 if is_male else 1200
     target = max(target, min_floor)
     
-    # Fats (30% target)
     fat_target = target * 0.30 / 9
     fat_min = target * 0.20 / 9
     
-    # Protein levels
     w = survey.weight
     prot_min = w * 0.8
     prot_opt = w * 1.6
     prot_max = w * 2.2
     
-    # Carbs based on optimum protein
     carbs_opt = (target - (prot_opt * 4) - (fat_target * 9)) / 4
     carbs_min = (target - (prot_min * 4) - (fat_target * 9)) / 4
     carbs_max = (target - (prot_max * 4) - (fat_target * 9)) / 4
@@ -149,9 +157,33 @@ def generate_plan(survey: UserSurveyRequest):
         result = recommend_meals(sheet, include_supplements=survey.include_supplements)
         if result.get("status") != "ok":
             result = recommend(sheet, include_supplements=survey.include_supplements)
-        return {"success": True, "sheet": raw_sheet, "plan": result}
+        
+        # Save date-wise entry to user history
+        history = load_history()
+        username = survey.name.strip().lower()
+        if username not in history:
+            history[username] = []
+        
+        today_date = datetime.now().strftime("%Y-%m-%d %H:%M")
+        log_entry = {
+            "date": today_date,
+            "goal": survey.goal,
+            "target_kcal": raw_sheet["energy"]["target_calories"],
+            "meals": result.get("meals", {})
+        }
+        # Keep recent unique logs or prepend
+        history[username].insert(0, log_entry)
+        save_history(history)
+
+        return {"success": True, "sheet": raw_sheet, "plan": result, "history": history[username]}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/api/history/{username}")
+def get_user_history(username: str):
+    history = load_history()
+    u = username.strip().lower()
+    return {"success": True, "history": history.get(u, [])}
 
 @app.post("/api/download-pdf")
 def download_pdf(survey: UserSurveyRequest):
@@ -175,7 +207,6 @@ def download_pdf(survey: UserSurveyRequest):
         story.append(Paragraph(f"Prepared for: <b>{survey.name}</b> ({survey.age} yrs, {survey.sex}, {survey.height} cm, {survey.weight} kg) | Goal: {survey.goal}", normal_style))
         story.append(Spacer(1, 12))
 
-        # Energy Summary Table
         story.append(Paragraph("1. Calorie & Macro Targets", heading_style))
         energy_data = [
             ["Metric", "Value"],
@@ -199,7 +230,6 @@ def download_pdf(survey: UserSurveyRequest):
         story.append(t)
         story.append(Spacer(1, 12))
 
-        # Daily Meals
         story.append(Paragraph("2. Recommended Daily Meal Plan", heading_style))
         if "meals" in result:
             for meal_name, meal_data in result["meals"].items():
