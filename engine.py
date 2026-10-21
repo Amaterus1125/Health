@@ -118,7 +118,7 @@ def replace(sheet, remove):
     pool = allowed_pool(s["profile"])
     return recommend(s), {r: substitutes(r, pool, 3) for r in remove if (FOODS.common_name == r).any()}
 
-# ---------------- automatic checks (use these for your evaluation) ----------------
+# automatic checks (use these for your evaluation) 
 def check(sheet, result):
     p, T = sheet["profile"], sheet["targets"]; bad = []
     for f in result["foods"]:
