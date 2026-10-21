@@ -52,6 +52,7 @@ def recommend_meals(sheet, shares=None, include_supplements=False, time_limit=90
     day = lambda col: pulp.lpSum(g[i, m] * FOODS[col][i] / 100 for i, m in pm)
     meal = lambda col, mm: pulp.lpSum(g[i, m] * FOODS[col][i] / 100 for i, m in pm if m == mm)
 
+  //
     for i, m in pm:
         typ = FOODS.typical_portion_g[i]
         prob += g[i, m] <= min(FOODS.max_g[i], 2 * typ) * ym[i, m]
@@ -92,7 +93,7 @@ def recommend_meals(sheet, shares=None, include_supplements=False, time_limit=90
             prob += pulp.lpSum(g[i, m] for i in mem if FOODS.food_group[i] in ("leafy_green", "vegetable")) + vs >= 80
             obj.append(1.0 * cs / (0.2 * tk)); obj.append(1.0 * vs / 80)
 
-    # ---- day-level nutrient targets (same as the day planner) ----
+    # ---- day-level nutrient targets (same as the day planner)
     for k, (col, kind, w) in NUT.items():
         if k not in T: continue
         s, o = pulp.LpVariable(f"s_{k}", lowBound=0), pulp.LpVariable(f"o_{k}", lowBound=0)
