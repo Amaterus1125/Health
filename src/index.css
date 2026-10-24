@@ -2885,3 +2885,337 @@ button {
   scrollbar-width: thin;
   scrollbar-color: rgba(101, 229, 154, 0.5) rgba(0, 0, 0, 0.3);
 }
+
+
+/* Additive macro/micro result cards; existing layout and component styles remain unchanged. */
+.nutrition-results-section {
+  margin: 42px 0 12px;
+}
+.nutrition-results-heading {
+  margin-bottom: 16px;
+}
+.nutrition-results-heading p {
+  margin-top: 7px;
+  opacity: 0.65;
+  font-size: 12px;
+}
+.nutrition-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+.nutrition-result-card {
+  min-width: 0;
+  padding: 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.nutrition-result-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 17px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.nutrition-result-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 13px;
+  background: rgba(101, 229, 154, 0.12);
+  color: #65e59a;
+  font-size: 21px;
+}
+.micro-result-card .nutrition-result-icon {
+  background: rgba(127, 156, 255, 0.14);
+  color: #9eb2ff;
+}
+.nutrition-result-title > div > span {
+  color: #65e59a;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+.micro-result-card .nutrition-result-title > div > span {
+  color: #9eb2ff;
+}
+.nutrition-result-title h3 {
+  margin-top: 3px;
+  font-family: "Manrope", sans-serif;
+  font-size: 19px;
+}
+.nutrition-result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding-top: 13px;
+}
+.nutrition-result-row {
+  min-width: 0;
+}
+.nutrition-result-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+.nutrition-result-row-top > span {
+  opacity: 0.8;
+}
+.nutrition-result-row-top strong {
+  text-align: right;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.nutrition-result-row-top strong small {
+  opacity: 0.55;
+  font-weight: 500;
+  font-size: 10px;
+}
+.nutrition-result-track {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.nutrition-result-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #37c879, #8cf5b5);
+  transition: width 0.35s ease;
+}
+.micro-result-card .nutrition-result-track > span {
+  background: linear-gradient(90deg, #7f9cff, #a9bbff);
+}
+.nutrition-result-coverage {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  opacity: 0.56;
+}
+.nutrition-result-note {
+  margin-top: 18px;
+  font-size: 10px;
+  line-height: 1.6;
+  opacity: 0.58;
+}
+@media (max-width: 800px) {
+  .nutrition-results-grid {
+    grid-template-columns: 1fr;
+  }
+  .nutrition-result-card {
+    padding: 19px;
+  }
+}
+@media (max-width: 480px) {
+  .nutrition-result-row-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nutrition-result-row-top strong {
+    text-align: left;
+  }
+}
+
+
+/* Individual macro and micro nutrient cards */
+.nutrition-group-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 26px 0 14px;
+}
+.nutrition-group-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 12px;
+  background: rgba(101, 229, 154, 0.12);
+  color: #65e59a;
+  font-size: 19px;
+}
+.micro-group-heading .nutrition-group-icon {
+  background: rgba(127, 156, 255, 0.14);
+  color: #9eb2ff;
+}
+.nutrition-group-heading h3 { margin: 0; font-size: 19px; font-weight: 800; }
+.nutrition-group-heading p { margin: 4px 0 0; font-size: 11px; opacity: 0.62; }
+.nutrition-individual-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.individual-nutrient-card {
+  min-width: 0;
+  padding: 19px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.individual-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
+.individual-card-top .nutrition-result-icon { width: 36px; height: 36px; flex-basis: 36px; font-size: 17px; }
+.nutrient-type-label { font-size: 9px; letter-spacing: 1.2px; font-weight: 800; opacity: 0.55; }
+.individual-nutrient-card h3 { margin: 0 0 10px; font-size: 15px; font-weight: 700; }
+.nutrient-value-line { display: flex; align-items: baseline; gap: 6px; margin-bottom: 15px; }
+.nutrient-value-line strong { font-size: 25px; line-height: 1.15; font-weight: 800; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.nutrient-value-line > span { font-size: 11px; opacity: 0.65; }
+.individual-nutrient-card .nutrition-result-track { margin-bottom: 12px; }
+.nutrient-target-line { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 10px; }
+.nutrient-target-line span { opacity: 0.6; }
+.nutrient-target-line strong { text-align: right; font-size: 10px; }
+.individual-nutrient-card .nutrition-result-coverage { margin-top: 8px; min-height: 13px; }
+@media (max-width: 900px) { .nutrition-individual-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+  .nutrition-individual-grid { grid-template-columns: 1fr; gap: 12px; }
+  .individual-nutrient-card { padding: 17px; }
+  .nutrient-value-line strong { font-size: 23px; }
+}
+
+
+/* Reference-inspired nutrition dashboard: translucent glass cards over food background */
+.nutrition-results-section {
+  margin: 36px 0 20px;
+  position: relative;
+}
+.nutrition-results-heading { margin-bottom: 24px; }
+.nutrition-results-heading > div > span,
+.nutrition-group-heading > div > span {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  color: rgba(225, 239, 229, .62);
+  margin-bottom: 7px;
+}
+.nutrition-results-heading h2 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 800;
+  letter-spacing: -.7px;
+}
+.nutrition-results-heading p { margin-top: 7px; font-size: 12px; color: rgba(235, 243, 237, .65); }
+.nutrition-group-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 16px;
+}
+.nutrition-group-heading .nutrition-group-icon { display: none; }
+.nutrition-group-heading h3 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+.nutrition-group-heading p { margin-top: 4px; font-size: 11px; color: rgba(235,243,237,.6); }
+.nutrition-individual-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.individual-nutrient-card {
+  min-width: 0;
+  min-height: 158px;
+  padding: 17px 16px 14px;
+  border: 1px solid rgba(232, 245, 236, .19);
+  border-radius: 17px;
+  background: linear-gradient(135deg, rgba(245, 250, 247, .15), rgba(205, 222, 211, .07));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .12), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.individual-nutrient-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(101, 229, 154, .45);
+  background: linear-gradient(135deg, rgba(245,250,247,.19), rgba(205,222,211,.09));
+}
+.individual-card-top { display: flex; align-items: center; justify-content: flex-start; gap: 10px; margin-bottom: 8px; }
+.individual-card-top .nutrition-result-icon {
+  width: 38px; height: 38px; flex-basis: 38px; border-radius: 12px;
+  display: grid; place-items: center; background: rgba(255,255,255,.13);
+  color: #f4f8f5; font-size: 17px; font-weight: 800;
+}
+.nutrient-type-label { display: none; }
+.individual-nutrient-card h3 { margin: 0 0 7px; font-size: 12px; font-weight: 700; color: rgba(248,251,249,.9); }
+.nutrient-value-line { display: flex; align-items: baseline; gap: 5px; margin-bottom: 14px; }
+.nutrient-value-line strong { font-family: "Manrope", sans-serif; font-size: clamp(19px, 1.7vw, 25px); line-height: 1.1; font-weight: 800; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.nutrient-value-line > span { font-size: 10px; color: rgba(238,245,240,.65); }
+.individual-nutrient-card .nutrition-result-track { margin-bottom: 9px; height: 6px; background: rgba(7, 16, 11, .35); }
+.individual-nutrient-card .nutrition-result-track > span { background: linear-gradient(90deg, #45d99a, #9df3c7); }
+.micro-result-card .nutrition-result-track > span { background: linear-gradient(90deg, #48c9db, #a0f1f7); }
+.nutrient-target-line { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 9px; color: rgba(235,243,237,.65); }
+.nutrient-target-line strong { color: rgba(245,249,246,.86); text-align: right; font-size: 9px; }
+.individual-nutrient-card .nutrition-result-coverage { display: block; margin-top: 7px; min-height: 12px; font-size: 9px; color: rgba(235,243,237,.62); }
+.nutrition-result-note { margin-top: 14px; font-size: 10px; line-height: 1.6; color: rgba(235,243,237,.58); }
+@media (max-width: 1100px) {
+  .nutrition-individual-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .nutrition-individual-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+  .individual-nutrient-card { min-height: 150px; padding: 15px 13px; }
+}
+@media (max-width: 420px) {
+  .nutrition-individual-grid { grid-template-columns: 1fr; }
+  .individual-nutrient-card { min-height: auto; }
+  .nutrient-value-line strong { font-size: 23px; }
+}
+
+/* FINAL OVERRIDE: match the compact four-column reference layout */
+.nutrition-results-section .nutrition-individual-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  align-items: stretch;
+  gap: 12px !important;
+  width: 100%;
+}
+.nutrition-results-section .nutrition-individual-grid > .individual-nutrient-card {
+  display: block;
+  width: auto !important;
+  min-width: 0;
+  max-width: none !important;
+  grid-column: auto !important;
+  align-self: stretch;
+}
+@media (max-width: 1100px) {
+  .nutrition-results-section .nutrition-individual-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 760px) {
+  .nutrition-results-section .nutrition-individual-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 420px) {
+  .nutrition-results-section .nutrition-individual-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+
+/* Daily target-only cards: hide consumption progress and achieved amounts */
+.nutrition-results-section .individual-nutrient-card .nutrition-result-track,
+.nutrition-results-section .individual-nutrient-card .nutrition-result-coverage {
+  display: none !important;
+}
+.nutrition-results-section .individual-nutrient-card .nutrient-target-line {
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+.nutrition-results-section .individual-nutrient-card .nutrient-target-line strong {
+  display: none;
+}
+.nutrition-results-section .individual-nutrient-card .nutrient-value-line {
+  margin-bottom: 10px;
+}
