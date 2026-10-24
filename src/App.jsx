@@ -11,6 +11,13 @@ const API_ENDPOINT = `${BACKEND_URL}/api/generate-plan`;
 const PDF_ENDPOINT = `${BACKEND_URL}/api/download-pdf`;
 const HISTORY_ENDPOINT = `${BACKEND_URL}/api/history`;
 
+const macroDescriptions = {
+  protein: "Builds and repairs muscle tissue, supports immune function, and creates vital enzymes and hormones in your body.",
+  carbs: "Serves as the body's primary and most efficient energy source to fuel your brain, nervous system, and physical workouts.",
+  fat: "Regulates hormones, protects vital organs, maintains cell membranes, and enables the absorption of fat-soluble vitamins (A, D, E, K).",
+  fiber: "Supports digestive health, regulates blood sugar levels, lowers cholesterol, and maintains healthy gut microbiome function."
+};
+
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -18,6 +25,7 @@ export default function App() {
   const [userHistory, setUserHistory] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const [selectedMacro, setSelectedMacro] = useState(null);
   const [selectedChartModal, setSelectedChartModal] = useState(null);
 
 
@@ -150,6 +158,101 @@ export default function App() {
   const sheet = useMemo(() => planData?.sheet, [planData]);
   const plan = useMemo(() => planData?.plan, [planData]);
 
+
+  // These values come from the backend optimizer response, not placeholder chart data.
+  const macroResultData = useMemo(() => {
+    if (!plan || !sheet) return [];
+    const totals = plan.totals || {};
+    const targets = {
+      protein: sheet.protein?.[formData.protein_level]?.g,
+      carbs: sheet.carbs_g?.[formData.protein_level],
+      fat: sheet.fat?.target_g,
+      kcal: sheet.energy?.target_calories,
+      fiber: sheet.fiber_g
+    };
+    return [
+      { label: "Protein", key: "protein", unit: "g", target: targets.protein },
+      { label: "Carbohydrates", key: "carbs", unit: "g", target: targets.carbs },
+      { label: "Fat", key: "fat", unit: "g", target: targets.fat },
+      { label: "Fibre", key: "fiber", unit: "g", target: targets.fiber }
+    ].map(item => ({
+      ...item,
+      achieved: totals[item.key],
+      coverage: plan.coverage?.[item.key]
+    }));
+  }, [plan, sheet, formData.protein_level]);
+
+  // Micronutrient targets:
+  // - Ages 1–18: ICMR–NIN RDA 2020 summary table (FSSAI-hosted PDF).
+  // - Ages 19+: uploaded nutrition_formula_guide.pdf adult table.
+  // Some nutrients are not specified in the child/adolescent table; they are
+  // deliberately shown as unavailable instead of borrowing adult values.
+  const microResultData = useMemo(() => {
+    const age = Number(formData.age);
+    const sex = formData.sex;
+    const isMale = sex === "Male";
+
+    const adult = age >= 19;
+    let band = null;
+    if (age >= 1 && age <= 3) band = "1-3";
+    else if (age <= 6 && age >= 4) band = "4-6";
+    else if (age <= 9 && age >= 7) band = "7-9";
+    else if (age <= 12 && age >= 10) band = isMale ? "10-12m" : "10-12f";
+    else if (age <= 15 && age >= 13) band = isMale ? "13-15m" : "13-15f";
+    else if (age <= 18 && age >= 16) band = isMale ? "16-18m" : "16-18f";
+
+    // ICMR–NIN 2020 values for children/adolescents. Vitamin D is converted
+    // from 600 IU/day to 15 µg/day. Unlisted nutrients remain null.
+    const childTargets = {
+      "1-3":   { vit_a:390, vit_c:30, vit_d:15, vit_b1:0.7, vit_b2:1.1, vit_b3:7, vit_b6:0.9, vit_b12:1.2, folate:120, calcium:500, iron:8, magnesium:90, zinc:3.3, iodine:90 },
+      "4-6":   { vit_a:510, vit_c:35, vit_d:15, vit_b1:0.9, vit_b2:1.3, vit_b3:9, vit_b6:1.2, vit_b12:2.2, folate:135, calcium:550, iron:11, magnesium:125, zinc:4.5, iodine:90 },
+      "7-9":   { vit_a:630, vit_c:45, vit_d:15, vit_b1:1.1, vit_b2:1.6, vit_b3:11, vit_b6:1.5, vit_b12:2.2, folate:170, calcium:650, iron:15, magnesium:175, zinc:5.9, iodine:90 },
+      "10-12m":{ vit_a:770, vit_c:55, vit_d:15, vit_b1:1.5, vit_b2:2.1, vit_b3:15, vit_b6:2.0, vit_b12:2.2, folate:220, calcium:850, iron:16, magnesium:240, zinc:8.5, iodine:100 },
+      "10-12f":{ vit_a:790, vit_c:50, vit_d:15, vit_b1:1.4, vit_b2:1.9, vit_b3:14, vit_b6:1.9, vit_b12:2.2, folate:225, calcium:850, iron:28, magnesium:250, zinc:8.5, iodine:100 },
+      "13-15m":{ vit_a:930, vit_c:70, vit_d:15, vit_b1:1.9, vit_b2:2.7, vit_b3:19, vit_b6:2.6, vit_b12:2.2, folate:285, calcium:1000, iron:22, magnesium:345, zinc:14.3, iodine:140 },
+      "13-15f":{ vit_a:890, vit_c:65, vit_d:15, vit_b1:1.6, vit_b2:2.2, vit_b3:16, vit_b6:2.2, vit_b12:2.2, folate:245, calcium:1000, iron:30, magnesium:340, zinc:12.8, iodine:140 },
+      "16-18m":{ vit_a:1000, vit_c:85, vit_d:15, vit_b1:2.2, vit_b2:3.1, vit_b3:22, vit_b6:3.0, vit_b12:2.2, folate:340, calcium:1050, iron:26, magnesium:440, zinc:17.6, iodine:140 },
+      "16-18f":{ vit_a:860, vit_c:70, vit_d:15, vit_b1:1.7, vit_b2:2.3, vit_b3:17, vit_b6:2.3, vit_b12:2.2, folate:270, calcium:1050, iron:32, magnesium:380, zinc:14.2, iodine:140 }
+    };
+
+    const adultNutrients = [
+      { label: "Vitamin A", key: "vit_a", unit: "µg", target: isMale ? 900 : 700 },
+      { label: "Vitamin C", key: "vit_c", unit: "mg", target: isMale ? 90 : 75 },
+      { label: "Vitamin D", key: "vit_d", unit: "µg", target: age >= 71 ? 20 : 15 },
+      { label: "Vitamin E", key: "vit_e", unit: "mg", target: 15 },
+      { label: "Vitamin K", key: "vit_k", unit: "µg", target: isMale ? 120 : 90 },
+      { label: "Vitamin B1 (Thiamin)", key: "vit_b1", unit: "mg", target: isMale ? 1.2 : 1.1 },
+      { label: "Vitamin B2 (Riboflavin)", key: "vit_b2", unit: "mg", target: isMale ? 1.3 : 1.1 },
+      { label: "Vitamin B3 (Niacin)", key: "vit_b3", unit: "mg", target: isMale ? 16 : 14 },
+      { label: "Vitamin B6", key: "vit_b6", unit: "mg", target: age >= 51 ? "1.5–1.7" : 1.3 },
+      { label: "Vitamin B12", key: "vit_b12", unit: "µg", target: 2.4 },
+      { label: "Folate", key: "folate", unit: "µg", target: 400 },
+      { label: "Calcium", key: "calcium", unit: "mg", target: ((sex === "Female" && age >= 51) || (isMale && age >= 71)) ? 1200 : 1000 },
+      { label: "Iron", key: "iron", unit: "mg", target: sex === "Female" && age >= 51 ? 8 : (isMale ? 8 : 18) },
+      { label: "Magnesium", key: "magnesium", unit: "mg", target: isMale ? "400–420" : "310–320" },
+      { label: "Zinc", key: "zinc", unit: "mg", target: isMale ? 11 : 8 },
+      { label: "Potassium", key: "potassium", unit: "mg", target: isMale ? 3400 : 2600 },
+      { label: "Selenium", key: "selenium", unit: "µg", target: 55 },
+      { label: "Iodine", key: "iodine", unit: "µg", target: 150 },
+      { label: "Sodium (upper limit)", key: "sodium", unit: "mg", target: "< 2300" },
+      { label: "Omega-3 ALA", key: "omega3_ala", unit: "g", target: isMale ? 1.6 : 1.1 },
+      { label: "Omega-3 EPA", key: "omega3_epa", unit: "mg", target: 250 },
+      { label: "Omega-3 DHA", key: "omega3_dha", unit: "mg", target: 250 }
+    ];
+
+    const childUnits = { vit_a: "µg", vit_c: "mg", vit_d: "µg", vit_b1: "mg", vit_b2: "mg", vit_b3: "mg", vit_b6: "mg", vit_b12: "µg", folate: "µg", calcium: "mg", iron: "mg", magnesium: "mg", zinc: "mg", iodine: "µg" };
+    const nutrients = adultNutrients.map(item => {
+      if (adult) return { ...item, supported: true };
+      const target = band ? (childTargets[band][item.key] ?? null) : null;
+      return { ...item, target, unit: childUnits[item.key] || item.unit, supported: target !== null };
+    });
+    return nutrients;
+  }, [formData.age, formData.sex]);
+
+  const microTargetNotice = Number(formData.age) < 19
+    ? "Ages 1–18 use the ICMR–NIN 2020 RDA table. Nutrients not listed in that table are shown as unavailable; these are reference values, not a pediatric meal-plan prescription."
+    : "Ages 19+ use the uploaded Nutrition Formula Guide. Pregnancy and lactation require separate values; consult a qualified healthcare professional.";
+
   const macroData = useMemo(() => {
     if (!sheet) return [];
     const pGrams = sheet.protein?.[formData.protein_level]?.g || 118;
@@ -181,7 +284,7 @@ export default function App() {
             <div className="form-header">
               <div>
                 <span>HEALTH ASSESSMENT PORTAL</span>
-                <h2>Welcome to NutriFlow</h2>
+                <h2>Welcome to HealthyMe</h2>
                 <p>Complete your biometric profile to generate your target macro balance and tailored Indian meal plan.</p>
               </div>
             </div>
@@ -244,7 +347,7 @@ export default function App() {
               <div className="form-row" style={{ marginTop: "15px" }}>
                 <div className="form-group">
                   <label>Age (Years)</label>
-                  <input type="number" name="age" value={formData.age} onChange={handleChange} required />
+                  <input type="number" name="age" min="1" max="100" value={formData.age} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
                   <label>Sex</label>
@@ -369,7 +472,8 @@ export default function App() {
           <div className="info-card glass"><span>WATER</span><strong>{sheet?.water_ml?.[formData.water_level || "moderate"]}ml</strong><small>daily</small></div>
         </section>
 
-        <section className="section-heading">
+        {/* 1. MEAL PLAN MOVED BEFORE MACRO/MICRO LISTINGS */}
+        <section className="section-heading" style={{ marginTop: "20px" }}>
           <div>
             <span>DAILY SCHEDULE</span>
             <h2>Tailored Meal Plan</h2>
@@ -438,6 +542,68 @@ export default function App() {
               </div>
             </div>
           ))}
+        </section>
+
+        {/* 2. MACRO & MICRO NUTRIENT RESULTS SECTION AFTER MEAL PLAN */}
+        <section className="nutrition-results-section" style={{ marginTop: "40px" }}>
+          <div className="section-heading nutrition-results-heading">
+            <div>
+              <span>MODEL-GENERATED NUTRITION RESULTS</span>
+              <h2>Macro & Micro Nutrient Results</h2>
+            </div>
+            <small style={{ opacity: 0.6, fontSize: "11px" }}>Click any macronutrient card to open full details</small>
+          </div>
+
+          <div className="nutrition-group-heading macro-group-heading">
+            <span className="nutrition-group-icon">⚡</span>
+            <div><h2>Macronutrients</h2><p>Energy and nutrients needed in larger amounts (Click any card to view bodily function)</p></div>
+          </div>
+          <div className="nutrition-individual-grid macro-individual-grid">
+            {macroResultData.map(item => {
+              return (
+                <article 
+                  className="nutrition-result-card individual-nutrient-card macro-result-card glass" 
+                  key={item.key}
+                  onClick={() => setSelectedMacro(item)}
+                  style={{ cursor: "pointer", transition: "all 0.25s ease" }}
+                >
+                  <div className="individual-card-top">
+                    <span className="nutrition-result-icon">{item.key === "kcal" ? "◉" : item.key === "protein" ? "P" : item.key === "carbs" ? "C" : item.key === "fat" ? "F" : "纤"}</span>
+                    <span className="nutrient-type-label">MACRO &bull; CLICK TO OPEN</span>
+                  </div>
+                  <h3>{item.label}</h3>
+                  <div className="nutrient-value-line">
+                    <strong>{item.target !== null && item.target !== undefined && item.target !== "" && Number.isFinite(Number(item.target)) ? Number(item.target).toLocaleString(undefined, { maximumFractionDigits: 1 }) : "—"}</strong>
+                    <span>{item.unit}</span>
+                  </div>
+                  <div className="nutrient-target-line"><span>Recommended daily intake</span></div>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="nutrition-group-heading micro-group-heading">
+            <span className="nutrition-group-icon">✳</span>
+            <div><h2>Micronutrients</h2></div>
+          </div>
+          <div className="nutrition-individual-grid micro-individual-grid">
+            {microResultData.map(item => {
+              return (
+                <article className="nutrition-result-card individual-nutrient-card micro-result-card glass" key={item.key}>
+                  <div className="individual-card-top">
+                    <span className="nutrition-result-icon">{item.label.startsWith("Vitamin") ? "V" : item.label === "Folate" ? "F" : "✦"}</span>
+                    <span className="nutrient-type-label">MICRO</span>
+                  </div>
+                  <h3>{item.label}</h3>
+                  <div className="nutrient-value-line">
+                    <strong>{item.target !== null && item.target !== undefined && item.target !== "" ? (typeof item.target === "number" ? item.target.toLocaleString(undefined, { maximumFractionDigits: 1 }) : item.target) : "Not available"}</strong>
+                    {item.target !== null && item.target !== undefined && item.target !== "" && <span>{item.unit}</span>}
+                  </div>
+                  <div className="nutrient-target-line"><span>{item.key === "sodium" ? "Daily upper limit" : "Recommended daily intake"}</span></div>
+                </article>
+              );
+            })}
+          </div>
         </section>
 
         <section className="section-heading" style={{ marginTop: "50px" }}>
@@ -605,6 +771,7 @@ export default function App() {
         )}
       </main>
 
+      {/* MEAL DETAILS MODAL */}
       {selectedMeal && (
         <div className="modal-overlay" onClick={() => setSelectedMeal(null)}>
           <div className="create-form glass" onClick={(e) => e.stopPropagation()} style={{ width: "700px", maxWidth: "90vw", padding: "30px", borderRadius: "24px" }}>
@@ -661,6 +828,35 @@ export default function App() {
 
             <div style={{ marginTop: "20px", textAlign: "right" }}>
               <button className="primary-button" onClick={() => setSelectedMeal(null)}>Close View</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MACRO DETAILS MODAL */}
+      {selectedMacro && (
+        <div className="modal-overlay" onClick={() => setSelectedMacro(null)}>
+          <div className="create-form glass" onClick={(e) => e.stopPropagation()} style={{ width: "600px", maxWidth: "90vw", padding: "30px", borderRadius: "24px" }}>
+            <div className="form-header" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "16px", marginBottom: "20px" }}>
+              <div>
+                <span style={{ color: "#65e59a", fontSize: "11px", letterSpacing: "1.5px", fontWeight: "800" }}>MACRONUTRIENT FUNCTION</span>
+                <h2 style={{ textTransform: "uppercase", fontSize: "24px", margin: "4px 0" }}>{selectedMacro.label}</h2>
+                <p style={{ margin: 0 }}>
+                  Target Intake: <strong style={{ color: "#65e59a" }}>{selectedMacro.target !== null && selectedMacro.target !== undefined ? Number(selectedMacro.target).toLocaleString(undefined, { maximumFractionDigits: 1 }) : "—"} {selectedMacro.unit}</strong>
+                </p>
+              </div>
+              <button className="close-button" onClick={() => setSelectedMacro(null)}>&times;</button>
+            </div>
+
+            <div style={{ fontSize: "15px", lineHeight: "1.6", color: "#f5f8f6", padding: "10px 0" }}>
+              <p style={{ marginBottom: "16px" }}><strong>What it does to your body:</strong></p>
+              <p style={{ background: "rgba(255, 255, 255, 0.04)", padding: "16px", borderRadius: "12px", border: "1px solid rgba(255, 255, 255, 0.08)" }}>
+                {macroDescriptions[selectedMacro.key] || "Provides essential energy and structural support for optimal metabolic function."}
+              </p>
+            </div>
+
+            <div style={{ marginTop: "20px", textAlign: "right" }}>
+              <button className="primary-button" onClick={() => setSelectedMacro(null)}>Close View</button>
             </div>
           </div>
         </div>
