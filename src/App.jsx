@@ -22,7 +22,7 @@ export default function App() {
 
 
   const [formData, setFormData] = useState({
-    name: "Harshit",
+    name: "USER",
     username: "",
     enable_login: false,
     age: 21,
