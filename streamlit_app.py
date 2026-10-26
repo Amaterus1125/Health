@@ -1,20 +1,14 @@
 # for just the model
-
 import streamlit as st
 import requests
 import pandas as pd
 st.set_page_config(page_title="Nutrition Optimizer UI", layout="wide")
-st.title("Indian Nutrition Plan Generator")
-
-
+st.title("HEALTHBAR")
 st.sidebar.header("1. Profile & Preferences")
-
-
 age = st.sidebar.number_input("Age", min_value=12, max_value=100, value=30)
 sex = st.sidebar.selectbox("Sex", ["male", "female"])
 height_cm = st.sidebar.number_input("Height (cm)", min_value=100, max_value=230, value=175)
 weight_kg = st.sidebar.number_input("Weight (kg)", min_value=30, max_value=200, value=75)
-
 activity_factor = st.sidebar.select_slider(
     "Activity Level",
     options=[1.2, 1.375, 1.55, 1.725, 1.9],
@@ -95,7 +89,7 @@ with tab2:
     st.json(sheet_json)
 
 with tab1:
-    if st.button("🚀 Generate Diet Plan", type="primary"):
+    if st.button("Generate Diet Plan", type="primary"):
         request_body = {
             "sheet": sheet_json,
             "protein_level": protein_level,
