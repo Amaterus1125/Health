@@ -1,27 +1,21 @@
-"""Meal-wise planner: same targets as engine.recommend, but foods are assigned to breakfast / lunch / snack / dinner."""
-import pulp
+importpulp
 from engine import (FOODS, NUT, UPPER, GROUP_CAP, ANIMAL, MAX_FOODS, MAX_SHARE, MAX_PER_GROUP, PAIRS,
                     MIN_ANIMAL_G, allowed_pool, substitutes)
 
 B, L, S, D = "breakfast", "lunch", "snack", "dinner"
-MEAL_SHARE = {B: 0.25, L: 0.35, S: 0.10, D: 0.30}            # share of the day's calories (change in preferences.meals)
-MEAL_PROTEIN_MIN = {B: 0.18, L: 0.25, S: 0.0, D: 0.25}        # share of the day's protein each meal should carry
+MEAL_SHARE = {B: 0.25, L: 0.35, S: 0.10, D: 0.30}       
+MEAL_PROTEIN_MIN = {B: 0.18, L: 0.25, S: 0.0, D: 0.25}      
 MEAL_MAX_FOODS = {B: 5, L: 6, S: 3, D: 6}
-
 BY_GROUP = {"cereal_millet": {L, D}, "pulse": {L, D}, "leafy_green": {L, D}, "vegetable": {L, D}, "root_tuber": {L, D},
             "fruit": {B, S}, "nut_seed": {B, S}, "dairy": {B, L, S, D}, "fat_oil": {B, L, D}, "condiment": {L, D},
             "sweetener": {B, S}, "beverage": {S}, "egg": {B, D}, "poultry": {L, D}, "meat": {L, D}, "fish": {L, D},
             "shellfish": {L, D}, "supplement": {B, S}}
-# name-prefix overrides: which meals a specific food may appear in
 OVERRIDE = {B: ["Oats", "Poha", "Murmura", "Suji", "Seviyan", "Ragi", "Atta", "Roti", "Besan", "Maida", "Rajgira", "Tofu",
                 "Soya chunks", "Whole moong", "Tomato", "Kheera", "Gajar", "Aloo", "Methi", "Paneer", "Ghee", "Corn, tender"],
             S: ["Murmura", "Kala chana", "Kheera", "Gajar", "Corn, tender", "Sweet corn", "Chaas", "Whey", "Milk", "Pudina"],
             L: ["Paneer", "Dahi", "Chaas", "Nimbu", "Imli", "Pudina"], D: ["Milk", "Paneer", "Nimbu", "Imli"]}
-
-
 ONLY = {"Oats": {B, S}, "Poha": {B, S}, "Murmura": {B, S}, "Suji": {B}, "Seviyan": {B}, "Maida": {B, L, D},
-        "Rajgira": {B, L, D}, "Whey": {B, S}}                   # foods tied to specific meals (replaces the group default)
-
+        "Rajgira": {B, L, D}, "Whey": {B, S}}                
 def tags(r):
     t = set(BY_GROUP.get(r.food_group, {L, D}))
     for prefix, only in ONLY.items():
@@ -31,7 +25,6 @@ def tags(r):
     if r.common_name.startswith(("Nimbu", "Imli")): t -= {B, S}
     if r.common_name.startswith("Chaas"): t -= {B, D}
     return t
-
 def recommend_meals(sheet, shares=None, include_supplements=False, time_limit=90):
     p, T = sheet["profile"], sheet["targets"]
     shares = shares or MEAL_SHARE
@@ -62,9 +55,9 @@ def recommend_meals(sheet, shares=None, include_supplements=False, time_limit=90
         obj.append(0.0005 * big[i, m])
     for i in pool:
         ms = [m for m in meals if (i, m) in g]
-        prob += pulp.lpSum(g[i, m] for m in ms) <= FOODS.max_g[i]                              # daily portion cap
-        prob += pulp.lpSum(g[i, m] * FOODS.kcal[i] / 100 for m in ms) <= MAX_SHARE * T["kcal"]   # no single-food diets
-        prob += pulp.lpSum(ym[i, m] for m in ms) <= 2                                           # a food in at most 2 meals
+        prob += pulp.lpSum(g[i, m] for m in ms) <= FOODS.max_g[i]                           
+        prob += pulp.lpSum(g[i, m] * FOODS.kcal[i] / 100 for m in ms) <= MAX_SHARE * T["kcal"]   
+        prob += pulp.lpSum(ym[i, m] for m in ms) <= 2                                           
     prob += pulp.lpSum(y.values()) <= MAX_FOODS + 2
     obj.append(pulp.lpSum(0.02 * (3 - FOODS.popularity[i]) * y[i] for i in pool))
     for a, b in PAIRS:
@@ -74,7 +67,7 @@ def recommend_meals(sheet, shares=None, include_supplements=False, time_limit=90
         mem = [i for i in pool if FOODS.food_group[i] == grp]
         if mem: prob += pulp.lpSum(y[i] for i in mem) <= mx
 
-    # ---- per-meal rules ----
+    # per meal rules like for breakfast , lunch and more yk 
     for m in meals:
         mem = [i for i in pool if (i, m) in g]
         prob += pulp.lpSum(ym[i, m] for i in mem) <= MEAL_MAX_FOODS[m]
@@ -83,17 +76,17 @@ def recommend_meals(sheet, shares=None, include_supplements=False, time_limit=90
             prob += pulp.lpSum(ym[i, m] for i in mem if FOODS.food_group[i] == grp) <= cap
         tk = shares[m] * T["kcal"]
         s, o = pulp.LpVariable(f"ms_{m}", lowBound=0), pulp.LpVariable(f"mo_{m}", lowBound=0)
-        prob += meal("kcal", m) + s - o == tk; obj.append(4 * (s + o) / tk)                     # meal calories close to its share
+        prob += meal("kcal", m) + s - o == tk; obj.append(4 * (s + o) / tk)                 
         if MEAL_PROTEIN_MIN[m] > 0:
             ps = pulp.LpVariable(f"mp_{m}", lowBound=0); pt = MEAL_PROTEIN_MIN[m] * T["protein"]
             prob += meal("protein", m) + ps >= pt; obj.append(2 * ps / pt)
-        if m in (L, D):                                                                          # a proper lunch/dinner
+        if m in (L, D):                                                                
             cs = pulp.LpVariable(f"mc_{m}", lowBound=0); vs = pulp.LpVariable(f"mv_{m}", lowBound=0)
             prob += pulp.lpSum(g[i, m] * FOODS.kcal[i] / 100 for i in mem if FOODS.food_group[i] == "cereal_millet") + cs >= 0.2 * tk
             prob += pulp.lpSum(g[i, m] for i in mem if FOODS.food_group[i] in ("leafy_green", "vegetable")) + vs >= 80
             obj.append(1.0 * cs / (0.2 * tk)); obj.append(1.0 * vs / 80)
 
-    # ---- day-level nutrient targets (same as the day planner)
+    #day level nutrient targets 
     for k, (col, kind, w) in NUT.items():
         if k not in T: continue
         s, o = pulp.LpVariable(f"s_{k}", lowBound=0), pulp.LpVariable(f"o_{k}", lowBound=0)
