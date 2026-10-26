@@ -1,13 +1,9 @@
-
 import argparse, json, sys
 from engine import recommend, check, LEVEL
-
 ALLERGENS = {"gluten", "dairy", "egg", "peanut", "tree_nut", "sesame", "soy", "fish", "shellfish", "mollusc", "coconut"}
 LEVELS = ("minimum", "optimum", "maximum")
-
-
 def sheet_to_engine(raw, protein_level):
-    """Convert the nutrition-sheet JSON (same sections as the formula guide) into what engine.py expects."""
+   
     try:
         m = raw["micronutrients"]
         targets = {
