@@ -1,10 +1,4 @@
-"""Run the recommendation engine on a nutrition-sheet JSON.
 
-usage:  python run.py                          -> whole-day plan from sheet.json
-        python run.py --meals                  -> plan split into breakfast / lunch / snack / dinner
-        python run.py vegan.json --meals       -> another file
-        python run.py sheet.json --protein maximum --out result.json
-"""
 import argparse, json, sys
 from engine import recommend, check, LEVEL
 
@@ -21,7 +15,7 @@ def sheet_to_engine(raw, protein_level):
             "protein":   raw["protein"][protein_level]["g"],
             "protein_max": raw["protein"]["maximum"]["g"],
             "fat":       raw["fat"]["target_g"],
-            "carbs":     raw["carbs_g"][protein_level],      # carbs shift with the protein level, as in the guide
+            "carbs":     raw["carbs_g"][protein_level],      
             "fiber":     raw["fiber_g"],
             "iron":      m["iron_mg"],
             "calcium":   m["calcium_mg"],
@@ -75,7 +69,7 @@ def main():
     sheet = sheet_to_engine(raw, a.protein)
     if a.meals:
         from meals import recommend_meals
-        shares = raw.get("preferences", {}).get("meals")      # optional, e.g. {"breakfast":0.3,"lunch":0.4,"dinner":0.3}
+        shares = raw.get("preferences", {}).get("meals")     
         result = recommend_meals(sheet, shares=shares, include_supplements=a.supplements)
     else:
         result = recommend(sheet, include_supplements=a.supplements)
