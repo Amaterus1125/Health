@@ -1,15 +1,11 @@
-"""Evaluation harness: optimizer vs greedy vs random baselines on synthetic user profiles.
-usage: python evaluate.py [N_PROFILES] [--meals]        (default 40 profiles, seed 42)"""
 import sys, time, json
 import numpy as np, pandas as pd
 from scipy.stats import wilcoxon
 from engine import FOODS, NUT, UPPER, LEVEL, allowed_pool, recommend
 from run import sheet_to_engine
-
 SEED = 42
 KEYS_MIN = ["fiber", "iron", "calcium", "zinc", "magnesium", "potassium", "vit_a", "vit_c", "folate"]
-
-# ---------------- 1. calculator (formulas from the guide, output = sheet.json format) ----------------
+#calculator (formulas from the guide yk and the output is in json form like a sheet is created and stuff)
 def build_sheet(age, sex, height, weight, activity, goal, water="moderate", prefs=None):
     bmr = 10 * weight + 6.25 * height - 5 * age + (5 if sex == "male" else -161)
     tdee = bmr * activity
@@ -33,15 +29,12 @@ def build_sheet(age, sex, height, weight, activity, goal, water="moderate", pref
                                "selenium_ug": 55, "iodine_ug": 150, "sodium_limit_mg": 2300},
             "omega3": {"ala_g": 1.6 if m else 1.1, "epa_mg": 250, "dha_mg": 250},
             "preferences": prefs or {"diet": "vegetarian"}}
-
-def test_calculator():            # the three worked examples of the guide
+def test_calculator():     
     a = build_sheet(30, "male", 175, 75, 1.55, "lose"); assert (a["energy"]["bmr"], a["energy"]["tdee"], a["energy"]["target_calories"]) == (1699, 2633, 2233)
     assert a["carbs_g"] == {"minimum": 331, "optimum": 271, "maximum": 226} and a["fat"]["target_g"] == 74 and a["fiber_g"] == 31
     b = build_sheet(28, "female", 162, 60, 1.375, "maintain"); assert (b["energy"]["bmr"], b["energy"]["target_calories"]) == (1312, 1803)
     assert b["carbs_g"] == {"minimum": 268, "optimum": 220, "maximum": 184}
     c = build_sheet(25, "male", 180, 70, 1.725, "gain"); assert (c["energy"]["bmr"], c["energy"]["target_calories"]) == (1705, 3341)
-
-# ---------------- 2. synthetic profiles ----------------
 def make_profiles(n, seed=SEED):
     rng = np.random.default_rng(seed); out = []
     for _ in range(n):
@@ -58,8 +51,6 @@ def make_profiles(n, seed=SEED):
                                str(rng.choice(["lose", "maintain", "gain"], p=[0.4, 0.3, 0.3])),
                                prefs={"diet": str(diet), "allergies": allergies, "dislikes": dislikes, "jain": jain}))
     return out
-
-# ---------------- 3. baselines ----------------
 def random_baseline(sheet, pool, rng, k=12):
     """random foods, random portions, then scaled to hit the calorie target (best a no-intelligence method can do)"""
     T = sheet["targets"]; idx = rng.choice(pool, size=min(k, len(pool)), replace=False)
@@ -68,7 +59,6 @@ def random_baseline(sheet, pool, rng, k=12):
     for _ in range(30):
         g = np.minimum(g * T["kcal"] / max((g * kc).sum(), 1), mx)
     return [(int(i), float(x)) for i, x in zip(idx, g) if x >= 5]
-
 def greedy_baseline(sheet, pool, max_foods=14):
     """add one food-step at a time that most reduces the same weighted deviation the optimizer minimises.
     Gets the same hard safety limits (portion caps, upper limits, single-food calorie share) but not the realism rules."""
@@ -87,8 +77,6 @@ def greedy_baseline(sheet, pool, max_foods=14):
         if sc[b] >= score(V) - 1e-9: break
         g[b] += step[b]
     return [(int(pool[i]), float(g[i])) for i in range(len(pool)) if g[i] >= 5]
-
-# ---------------- 4. metrics ----------------
 def metrics(sheet, plan):
     p, T = sheet["profile"], sheet["targets"]
     tot = {k: sum(gr * FOODS[NUT[k][0]][i] / 100 for i, gr in plan) for k in NUT if k in T}
@@ -104,7 +92,6 @@ def metrics(sheet, plan):
             "sat_fat_pct_kcal": 100 * sat * 9 / kc if kc else np.nan, "n_foods": len(plan),
             "mean_popularity": float(np.mean([FOODS.popularity[i] for i, _ in plan])),
             "max_food_kcal_share": max(gr * FOODS.kcal[i] / 100 for i, gr in plan) / kc if kc else np.nan}
-
 def main():
     n = int(next((a for a in sys.argv[1:] if a.isdigit()), 40)); with_meals = "--meals" in sys.argv
     test_calculator(); print("calculator reproduces the 3 worked examples of the guide: OK\n")
