@@ -1,20 +1,15 @@
 # for just the model
-
 import streamlit as st
 import requests
 import pandas as pd
 st.set_page_config(page_title="Nutrition Optimizer UI", layout="wide")
-st.title("Indian Nutrition Plan Generator")
-
-
+st.title("HEALTH")
 st.sidebar.header("1. Profile & Preferences")
-
 
 age = st.sidebar.number_input("Age", min_value=12, max_value=100, value=30)
 sex = st.sidebar.selectbox("Sex", ["male", "female"])
 height_cm = st.sidebar.number_input("Height (cm)", min_value=100, max_value=230, value=175)
 weight_kg = st.sidebar.number_input("Weight (kg)", min_value=30, max_value=200, value=75)
-
 activity_factor = st.sidebar.select_slider(
     "Activity Level",
     options=[1.2, 1.375, 1.55, 1.725, 1.9],
@@ -28,7 +23,6 @@ activity_factor = st.sidebar.select_slider(
     }[x]
 )
 goal = st.sidebar.selectbox("Goal", ["lose", "maintain", "gain"])
-
 st.sidebar.markdown("---")
 diet = st.sidebar.selectbox("Diet Type", ["vegetarian", "vegan", "egg", "nonveg"])
 allergies = st.sidebar.multiselect(
@@ -37,13 +31,11 @@ allergies = st.sidebar.multiselect(
 )
 dislikes_str = st.sidebar.text_input("Dislikes (comma-separated)", "spinach, paneer")
 jain = st.sidebar.checkbox("Jain Diet Rules", value=False)
-
 st.sidebar.header("2. Engine Settings")
 protein_level = st.sidebar.selectbox("Protein Target Level", ["minimum", "optimum", "maximum"], index=1)
 split_meals = st.sidebar.checkbox("Split into Meals (B/L/S/D)", value=True)
 include_supplements = st.sidebar.checkbox("Include Supplements (e.g. Whey)", value=False)
 backend_url = st.sidebar.text_input("Backend API Endpoint", "http://localhost:8000/api/plan")
-
 def build_sheet_payload():
     bmr = 10 * weight_kg + 6.25 * height_cm - 5 * age + (5 if sex == "male" else -161)
     tdee = bmr * activity_factor
@@ -95,7 +87,7 @@ with tab2:
     st.json(sheet_json)
 
 with tab1:
-    if st.button("🚀 Generate Diet Plan", type="primary"):
+    if st.button(" Generate Diet Plan", type="primary"):
         request_body = {
             "sheet": sheet_json,
             "protein_level": protein_level,
