@@ -1,4 +1,4 @@
-importpulp
+import pulp
 from engine import (FOODS, NUT, UPPER, GROUP_CAP, ANIMAL, MAX_FOODS, MAX_SHARE, MAX_PER_GROUP, PAIRS,
                     MIN_ANIMAL_G, allowed_pool, substitutes)
 
